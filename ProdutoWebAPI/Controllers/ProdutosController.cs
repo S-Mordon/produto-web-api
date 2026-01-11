@@ -20,7 +20,7 @@ namespace ProdutoWebAPI.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Produto>> GetProdutos()
         {
-            var produtos = _context.Produtos.ToList();
+            var produtos = _context.Produtos.AsNoTracking().ToList();
 
             if (produtos is null)
             {
@@ -32,7 +32,7 @@ namespace ProdutoWebAPI.Controllers
         [HttpGet("{id:int}", Name = "ObterProduto")]
         public ActionResult<Produto> GetProdutoById(int id)
         {
-            var produto = _context.Produtos.FirstOrDefault(x => x.Id == id);
+            var produto = _context.Produtos.AsNoTracking().FirstOrDefault(x => x.Id == id);
 
             if (produto == null)
             {

@@ -19,13 +19,17 @@ namespace ProdutoWebAPI.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Categoria>> GetCategorias()
         {
-            return _context.Categorias.ToList();
+            return _context.Categorias
+                .AsNoTracking()
+                .ToList();
         }
 
         [HttpGet("{id:int}", Name = "ObterCategoria")]
         public ActionResult<Categoria> GetProdutoById(int id)
         {
-            var categoria = _context.Categorias.FirstOrDefault(p => p.Id == id);
+            var categoria = _context.Categorias
+                .AsNoTracking()
+                .FirstOrDefault(p => p.Id == id);
 
             if (categoria is null)
             {
@@ -38,7 +42,10 @@ namespace ProdutoWebAPI.Controllers
         [HttpGet("produtos")]
         public ActionResult<IEnumerable<Categoria>> GetCategoriasProdutos()
         {
-            return _context.Categorias.Include(p => p.Produtos).ToList();
+            return _context.Categorias
+                .Include(p => p.Produtos)
+                .AsNoTracking()
+                .ToList();
         }
 
         [HttpPost]
